@@ -4,6 +4,11 @@
 [//]: # (A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why? What's the motivation behind your project?)
 
 ## Research questions
+
+- How does the complexity of words employed by a movie affect its popularity?
+- How does the spread of words in a movie affect its popularity?
+- How has the presence of dialogues in movies evolved across the years?
+
 [//]: # (A list of research questions you would like to address during the project.)
 
 ## Dataset
