@@ -17,9 +17,31 @@ https://icitdocs.epfl.ch/display/clusterdocs/OpenSubtitles
 
 https://datasets.imdbws.com/
 
-[//]: # (List the datasets you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.) 
+[//]: # (List the datasets you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.)
 
 ## A list of internal milestones up until project milestone 2
+
+
+04.11
+
+- Set up the Git repository and project skeleton.
+
+11.11
+
+- Find the most powerful way to store and look up all our data.
+- Clean our dataset
+- Develop methods to analyze the subtitles: counting words, spread of  words, mean length of sentences, dialogue time.
+
+18.11
+
+- Test our methods.
+- Gather results.
+- Start analysis.
+
+25.11
+
+- Set up our goals and plans for the next milestone.
+
 [//]: # (Add here a sketch of your planning for the next project milestone.)
 
 ## Questions for TAa
