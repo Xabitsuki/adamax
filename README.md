@@ -44,5 +44,10 @@ https://datasets.imdbws.com/
 
 [//]: # (Add here a sketch of your planning for the next project milestone.)
 
-## Questions for TAa
+## Questions for TAs
+
+- How can we link the IMDb dataset with OpenSubtitles?
+- Is there a good library/way to analyze text?
+- Are we allowed other programming languages and/or tools than Python? NVivo for instance.
+
 [//]: # (Add here some questions you have for us, in general or project-specific.)
