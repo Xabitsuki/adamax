@@ -41,6 +41,8 @@ CIC visually confirms
 a Cessna 172.
 ```
 
+We intend to count the frequency of words, the number of distinct words in a movie and compute the average length of sentences to determine the complexity of a movie's script.
+
 [//]: # (List the datasets you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.)
 
 ## A list of internal milestones up until project milestone 2
