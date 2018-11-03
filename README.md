@@ -16,9 +16,28 @@ What kind of script do you have to write for your movie to prosper? How have mov
 
 ## Dataset
 
-https://icitdocs.epfl.ch/display/clusterdocs/OpenSubtitles
+- [OpenSubtitles](https://icitdocs.epfl.ch/display/clusterdocs/OpenSubtitles): consists of 3.74 million subtitle files over 62 languages and covers a total of 152,939 movies or TV episodes. The size of the dataset is 31GB and is provided in XML and TXT format.
 
-https://datasets.imdbws.com/
+- [IMDb Datasets](https://datasets.imdbws.com/): contain the information of movies and shows, cast, actors, directors and writers, TV episodes and ratings and votes for each title. Each dataset is contained in a gzipped, tab-separated-values (TSV) formatted file in the UTF-8 character set.
+
+Each movie/show in the OpenSubtitles dataset is determined by its IMDb identifier allowing us to enrich the OpenSubtitles dataset with the IMDb dataset.
+
+A subtitle file looks like the following :
+```
+3
+00:00:39,299 --> 00:00:41,099
+Sir, we're getting
+a distress call
+
+4
+00:00:41,168 --> 00:00:42,634
+from a civilian aircraft.
+
+5
+00:00:46,540 --> 00:00:49,641
+CIC visually confirms
+a Cessna 172.
+```
 
 [//]: # (List the datasets you want to use, and some ideas on how do you expect to get, manage, process and enrich it/them. Show us you've read the docs and some examples, and you've a clear idea on what to expect. Discuss data size and format if relevant.)
 
