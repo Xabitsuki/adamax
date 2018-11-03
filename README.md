@@ -24,14 +24,13 @@ https://datasets.imdbws.com/
 
 ## A list of internal milestones up until project milestone 2
 
-
 04.11
 
 - Set up the Git repository and project skeleton.
 
 11.11
-
-- Find the most powerful way to store and look up all our data.
+- Find the most convenient way to store and look up our data.
+- Download the data.
 - Clean our dataset.
 - Develop methods to analyze the subtitles: counting words, spread of  words, mean length of sentences, dialogue time.
 
