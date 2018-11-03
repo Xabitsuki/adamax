@@ -22,7 +22,9 @@ What kind of script do you have to write for your movie to prosper? How have mov
 
 Each movie/show in the OpenSubtitles dataset is determined by its IMDb identifier allowing us to enrich the OpenSubtitles dataset with the IMDb dataset.
 
-A subtitle file looks like the following :
+Subtitle files contain for each subtitle a unique number of the subtitle shown, timestamps for the duration the subtitle is shown and the text displayed.
+
+An extract of a subtitle file:
 ```
 3
 00:00:39,299 --> 00:00:41,099
