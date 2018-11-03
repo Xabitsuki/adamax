@@ -1,6 +1,9 @@
 # A Movie behind a Script
 
 ## Abstract
+
+What kind of script do you have to write for your movie to prosper? How have movies' scripts changed across the years? In this project we investigate whether a movie's script has an impact on the movie's popularity and whether scripts typically follow certain patterns, perhaps depending on the movie's genre. Moreover, we provide an analysis of how movies' scripts have evolved through the years. Using the [OpenSubtitles](https://icitdocs.epfl.ch/display/clusterdocs/OpenSubtitles) dataset to analyze movies' scripts and the [IMDb](https://datasets.imdbws.com/) dataset to measure movies' popularity, we hope to answer the questions laid out at the beginning of this paragraph and provide a better insight to what makes a good and a bad movie.
+
 [//]: # (A 150 word description of the project idea, goals, dataset used. What story you would like to tell and why? What's the motivation behind your project?)
 
 ## Research questions
