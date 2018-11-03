@@ -29,7 +29,7 @@ https://datasets.imdbws.com/
 11.11
 
 - Find the most powerful way to store and look up all our data.
-- Clean our dataset
+- Clean our dataset.
 - Develop methods to analyze the subtitles: counting words, spread of  words, mean length of sentences, dialogue time.
 
 18.11
