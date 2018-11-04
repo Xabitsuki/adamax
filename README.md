@@ -10,6 +10,7 @@ What kind of script do you have to write for your movie to prosper? How have mov
 
 - How does the complexity of words employed by a movie affect its popularity?
 - How does the spread of words in a movie affect its popularity?
+- How has the vocabulary used in movies' scripts evolved across the years?
 
 [//]: # (A list of research questions you would like to address during the project.)
 
