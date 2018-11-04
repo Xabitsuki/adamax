@@ -71,7 +71,6 @@ We intend to count the frequency of words, the number of distinct words in a mov
 
 ## Questions for TAs
 
-- How can we link the IMDb dataset with OpenSubtitles?
 - Is there a good library/way to analyze text?
 - Are we allowed other programming languages and/or tools than Python? NVivo for instance.
 
