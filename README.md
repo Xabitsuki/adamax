@@ -8,10 +8,9 @@ A movie is a recording of moving images that tell a story and that people watch 
 
 ## Research questions
 
-- How does the complexity of words employed by a movie affect its popularity?
-- How does the spread of words in a movie affect its popularity?
+- How does the complexity and spread of words employed by a movie affect its popularity?
 - How has the vocabulary used in movies' scripts evolved across the years?
-- Can we predict the popularity of a movie based on its script ?
+- Can we predict the popularity of a movie based on its script?
 
 [//]: # (A list of research questions you would like to address during the project.)
 
