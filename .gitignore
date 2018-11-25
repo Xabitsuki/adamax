@@ -3,4 +3,4 @@ metastore_db/
 derby.log
 var/
 .DS_Store
-
+sample_dataset/
