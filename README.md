@@ -46,9 +46,9 @@ a Cessna 172.
 ```
 Subtitle files contain for each subtitle a unique number of the subtitle shown, timestamps for the duration the subtitle is shown and the text displayed.
 
-- [IMDb Datasets](https://datasets.imdbws.com/): contain the information of movies and shows, cast, actors, directors and writers, TV episodes and ratings and votes for each title. Each dataset is contained in a gzipped, tab-separated-values (TSV) formatted file in the UTF-8 character set.
-
 We intend to count the frequency of words, the number of distinct words in a movie and compute the average length of sentences to determine the complexity of a movie's script.
+
+- [IMDb Datasets](https://datasets.imdbws.com/): contain the information of movies and shows, cast, actors, directors and writers, TV episodes and ratings and votes for each title. Each dataset is contained in a gzipped, tab-separated-values (TSV) formatted file in the UTF-8 character set.
 
 Each movie/show in the OpenSubtitles dataset is determined by its IMDb identifier allowing us to enrich the OpenSubtitles dataset with the IMDb dataset.
 
