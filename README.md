@@ -13,7 +13,7 @@ A movie is a recording of moving images that tell a story and that people watch 
  - How large is the spread of words used?
  - Must it employ a particular set of words?
 - Based on certain features of the script, can we predict the corresponding movie's popularity?
- - We measure its popularity by measuring its IMDb rating and the box office.
+ - We measure its popularity by measuring its IMDb rating, number of votes and the box office.
 - What are the common features in good and bad movies?
  - Can we find similarities between good (or bad) movies based on their script's features?
  - Can we therefore define new movie categories (instead of their genre e.g.)?
