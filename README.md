@@ -11,6 +11,7 @@ A movie is a recording of moving images that tell a story and that people watch 
 - How does the complexity and spread of words employed by a movie affect its popularity?
 - How has the vocabulary used in movies' scripts evolved across the years?
 - Can we predict the popularity of a movie based on its script?
+- Based on the features of the script of movie, can we predict its genre ? More generally, what movie-cluster would we obtain if we look at the most frequents words, mean number of words, imdb rating etc ? 
 
 [//]: # (A list of research questions you would like to address during the project.)
 
