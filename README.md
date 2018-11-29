@@ -9,14 +9,14 @@ A movie is a recording of moving images that tell a story and that people watch 
 ## Research questions
 
 - What significant features in the movie's script must a good movie have?
- - Is a lot of dialogue present?
- - How large is the spread of words used?
- - Must it employ a particular set of words?
+  - Is a lot of dialogue present?
+  - How large is the spread of words used?
+  - Must it employ a particular set of words?
 - Based on certain features of the script, can we predict the corresponding movie's popularity?
- - We measure its popularity by measuring its IMDb rating, number of votes and the box office.
+  - We measure its popularity by measuring its IMDb rating, number of votes and the box office.
 - What are the common features in good and bad movies?
- - Can we find similarities between good (or bad) movies based on their script's features?
- - Can we therefore define new movie categories (instead of their genre e.g.)?
+  - Can we find similarities between good (or bad) movies based on their script's features?
+  - Can we therefore define new movie categories (instead of their genre e.g.)?
 - Bonus: can we relate the language used by reviewers on IMDb to the movie's script and genre?
 
 [//]: # (A list of research questions you would like to address during the project.)
