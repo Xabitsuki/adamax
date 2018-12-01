@@ -65,10 +65,10 @@ def load_df(path):
     return df_film
 
 def is_valid_year(year):
-    return not year.startswith('.') and len(year) == 4 and 1900 < int(year) and int(year) <= 2019
+    return len(year) == 4 and 1900 < int(year) and int(year) <= 2019
 
 def is_valid_movie_id(movie_id):
-    return not movie_id.startswith('.') and len(movie_id) == 7
+    return len(movie_id) == 7
 
 def is_empty(path):
     return not os.listdir(path)
