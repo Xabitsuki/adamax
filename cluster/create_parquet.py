@@ -40,22 +40,21 @@ def clean_df(df_document, imdb_id):
     # Create IMDb ID and subtitles column
     df_film_sentences = df_document.withColumn("tconst", lit("tt" + imdb_id))\
                                    .withColumn("subtitles", udf_subtitles_array("s"))
-
+    
     # Select metadata and previously created columns
     df_result = df_film_sentences.selectExpr("tconst",
                                              "meta.conversion.sentences as num_subtitles",
-                                             "meta.source.genre",
-                                             "meta.source.year",
+                                             "meta.source.year", 
                                              "meta.subtitle.blocks",
                                              "meta.subtitle.duration as subtitle_duration",
                                              "meta.subtitle.language",
                                              "subtitles")
     # Split genre column and convert subtitle duration to seconds
-    df_result = df_result.withColumn("genres", udf_split("genre")) \
-                         .withColumn("subtitle_mins",
+    df_result = df_result.withColumn("subtitle_mins", 
                                      unix_timestamp(df_result.subtitle_duration, "HH:mm:ss,SSS") / 60)
     # Discard redundant columns
-    return df_result.select("tconst", "num_subtitles", "year", "blocks", "subtitle_mins", "genres", "subtitles")
+    return df_result.select("tconst", "num_subtitles", "year", "blocks", "subtitle_mins", "subtitles")
+
 
 def load_df(path):
     """Load an XML subtitles file into a dataframe"""
@@ -82,7 +81,6 @@ def df_all_files():
                                StructField('year', LongType(), True),
                                StructField('blocks', LongType(), True),
                                StructField('subtitle_mins', DoubleType(), True),
-                               StructField('genres', ArrayType(StringType()), True),
                                StructField('subtitles', ArrayType(ArrayType(StringType())), True)])
     # Create empty dataframe with specified schema
     df_films = spark.createDataFrame([], schema_films)
