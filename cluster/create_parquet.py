@@ -1,12 +1,15 @@
-from pyspark.sql import SparkSession
-from pyspark.sql import SQLContext # if needed
+import re
+import os
+from pyspark import SparkContext
+from pyspark.sql import *
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+# from datetime import datetime
 
 spark = SparkSession.builder.getOrCreate()
-## Global variables
-# Path
-path = '/datasets/opensubtitle/OpenSubtitles2018/xml/en/'
-# Year range
-years = map(lambda x : str(x), range(1900, 2019))
+sc = spark.sparkContext
+sqlContext = SQLContext(sc)
+DATA_DIR = 'hdfs:///datasets/opensubtitle/OpenSubtitles2018/xml/en'
 
 def to_subtitles_array(sentences):
     """Function to map the elements (a struct containing tokens)
@@ -18,7 +21,7 @@ def to_subtitles_array(sentences):
         w_list = []
         if words and "w" in words and words["w"]:
             for w in words["w"]:
-                if '_VALUE' in w and w['_VALUE']:
+                if '_VALUE' in w and w['_VALUE'] and re.match("^[a-zA-Z]+$", w['_VALUE']):
                     w_list.append(w['_VALUE'])
             s_list.append(w_list)
     return s_list
@@ -61,45 +64,57 @@ def load_df(path):
                              .load(path)
     return df_film
 
-def get_paths(command_ar) :
-     # ls in year file
-    out_ls = subprocess.check_output(command_ar)
-    # recover lines format
-    out_ls = out_ls.split('\n')
-    # drop first and last elements
-    out_ls= out_ls[1:-1]
-    # get full path to movies: in output of ls, only the
-    # last element (separated by spaces) is the path
-    paths = [path.split(' ')[-1] for path in out_ls]
-    return paths
+def is_valid_year(year):
+    return not year.startswith('.') and len(year) == 4 and 1900 < int(year) and int(year) <= 2019
 
-def df_all_files(path):
+def is_valid_movie_id(movie_id):
+    return not movie_id.startswith('.') and len(movie_id) == 7
+
+def is_empty(path):
+    return not os.listdir(path)
+
+def df_all_files():
     """Function that returns a dataframe with all the films data
     in a path that has the following subdirectories: year/imdb_id/"""
 
-    # for all years
-    for year in years:
-        path_to_year = path + year
-        # Retrieve path to the movies
-        movie_paths = get_paths(['hadoop','fs','-ls', path_to_year])
-        # Keep only 7-character movie ids
-        movie_paths = filter(lambda path : len(path.split('/')[-1]) == 7, movie_paths)
+    schema_films = StructType([StructField('tconst', StringType(), False),
+                               StructField('num_subtitles', LongType(), True),
+                               StructField('year', LongType(), True),
+                               StructField('blocks', LongType(), True),
+                               StructField('subtitle_mins', DoubleType(), True),
+                               StructField('genres', ArrayType(StringType()), True),
+                               StructField('subtitles', ArrayType(ArrayType(StringType())), True)])
+    # Create empty dataframe with specified schema
+    df_films = spark.createDataFrame([], schema_films)
 
-        if len(path_to_movies) != 0:
-            for movie_id in movie_paths:
-                movie_path = path_to_year + "/" + movie_id
-                file_paths = get_paths(['hadoop','fs','-ls', movie_path])
-                for idx, fn in enumerate(file_paths):
-                    file_path = file_paths + "/" + fn
-                    # Create a dataframe for each file
-                    df_document = load_df(file_path)
-                    if idx == 0:
-                        df_films = clean_df(df_document, imdb_id)
-                    else:
-                        # Restructure dataframe and add it to df_films
-                        df_films = df_films.unionAll(clean_df(df_document, imdb_id))
+    hadoop = sc._jvm.org.apache.hadoop
+    fs = hadoop.fs.FileSystem
+    conf = hadoop.conf.Configuration()
+    path = hadoop.fs.Path(DATA_DIR)
+    years = map(lambda y: str(y), range(2010, 2019))
+    # 1996/853497
+    #561586/6614354.xml.gz
+    for year in years:
+        year_path = hadoop.fs.Path(DATA_DIR + "/" + year)
+        # print(year_path)
+        for i in fs.get(conf).listStatus(year_path):
+            id = str(i.getPath()).split('/')[-1]
+            movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
+            for f in fs.get(conf).listStatus(movie_path):
+                fn = str(f.getPath()).split('/')[-1]
+                file_path = DATA_DIR + "/" + year + "/" + id + "/" + fn
+                # Create a dataframe for each file
+                df_document = load_df(file_path)
+                # Restructure dataframe and add it to df_films
+                df_films = df_films.unionAll(clean_df(df_document, imdb_id))
+                # print(fn)
     return df_films
 
-df_films = df_all_files(path)
-# Create parquet file
-df_films.write.mode('overwrite').parquet("films.parquet")
+def run():
+    df_films = df_all_files()
+    print("Create parquet")
+    # Create parquet file
+    df_films.write.mode('overwrite').parquet("test.parquet")
+
+if __name__ == '__main__':
+    run()
