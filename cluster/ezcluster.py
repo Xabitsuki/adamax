@@ -12,7 +12,6 @@ sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 
 def run():
-<<<<<<< Updated upstream
     hadoop = sc._jvm.org.apache.hadoop
     fs = hadoop.fs.FileSystem
     conf = hadoop.conf.Configuration()
@@ -28,7 +27,7 @@ def run():
             id = str(i.getPath()).split('/')[-1]
             movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
             for f in fs.get(conf).listStatus(movie_path):
-                fn = str(f.getPath()).split('/')[-1]
+                fn = str(f.getPath())#.split('/')[-1]
                 print(fn)
 
 if __name__ == '__main__':
