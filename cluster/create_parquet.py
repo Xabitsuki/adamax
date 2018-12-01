@@ -91,7 +91,7 @@ def df_all_files():
     fs = hadoop.fs.FileSystem
     conf = hadoop.conf.Configuration()
     path = hadoop.fs.Path(DATA_DIR)
-    years = map(lambda y: str(y), range(2010, 2019))
+    years = map(lambda y: str(y), range(1910, 2019))
     # 1996/853497
     #561586/6614354.xml.gz
     for year in years:
@@ -99,15 +99,20 @@ def df_all_files():
         # print(year_path)
         for i in fs.get(conf).listStatus(year_path):
             id = str(i.getPath()).split('/')[-1]
-            movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
-            for f in fs.get(conf).listStatus(movie_path):
-                fn = str(f.getPath()).split('/')[-1]
-                file_path = DATA_DIR + "/" + year + "/" + id + "/" + fn
-                # Create a dataframe for each file
-                df_document = load_df(file_path)
-                # Restructure dataframe and add it to df_films
-                df_films = df_films.unionAll(clean_df(df_document, imdb_id))
-                # print(fn)
+            if(len(id) == 7):
+                movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
+                count = 0
+                for f in fs.get(conf).listStatus(movie_path):
+                    if count == 1:
+                        break
+                    fn = str(f.getPath()).split('/')[-1]
+                    file_path = DATA_DIR + "/" + year + "/" + id + "/" + fn
+                    # Create a dataframe for each file
+                    df_document = load_df(file_path)
+                    # Restructure dataframe and add it to df_films
+                    df_films = df_films.unionAll(clean_df(df_document, id))
+                    count = count + 1
+                    # print(fn)
     return df_films
 
 def run():
