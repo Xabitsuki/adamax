@@ -4,12 +4,31 @@ from pyspark import SparkContext
 from pyspark.sql import *
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
+from pyspark.sql.utils import AnalysisException
 # from datetime import datetime
 
 spark = SparkSession.builder.getOrCreate()
 sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 DATA_DIR = 'hdfs:///datasets/opensubtitle/OpenSubtitles2018/xml/en'
+
+#checks if correct schema
+def has_correct_schema(df):
+    arguments = [
+                 "meta.conversion.sentences",
+                 "meta.source.year", 
+                 "meta.subtitle.blocks",
+                 "meta.subtitle.duration",
+                 "meta.subtitle.language",
+                 "s"]
+    for col in arguments:
+        try:
+            df[col]
+        except AnalysisException:
+            return False
+    return True
+
+
 
 def to_subtitles_array(sentences):
     """Function to map the elements (a struct containing tokens)
@@ -108,8 +127,10 @@ def df_all_files():
                     # Create a dataframe for each file
                     df_document = load_df(file_path)
                     # Restructure dataframe and add it to df_films
-                    df_films = df_films.unionAll(clean_df(df_document, id))
-                    count = count + 1
+                    if(has_correct_schema(df_document)):
+                        
+                        df_films = df_films.unionAll(clean_df(df_document, id))
+                        count = count + 1
                     # print(fn)
     return df_films
 
