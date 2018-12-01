@@ -12,6 +12,7 @@ sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 
 def run():
+<<<<<<< Updated upstream
     hadoop = sc._jvm.org.apache.hadoop
     fs = hadoop.fs.FileSystem
     conf = hadoop.conf.Configuration()
