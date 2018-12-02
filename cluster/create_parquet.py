@@ -119,7 +119,9 @@ def df_all_files():
         # print(year_path)
         for i in fs.get(conf).listStatus(year_path):
             id = str(i.getPath()).split('/')[-1]
-            if(len(id) == 7 and ("tt"+id)  in imdb_ids):
+            if len(id) <=7:
+                imdb_id = id.rjust(7, "0")
+            if(("tt"+imdb_id)  in imdb_ids):
                 movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
                 count = 0
                 for f in fs.get(conf).listStatus(movie_path):
@@ -141,7 +143,7 @@ def run():
     df_films = df_all_files()
     print("Create parquet")
     # Create parquet file
-    df_films.write.mode('overwrite').parquet("test.parquet")
+    df_films.write.mode('overwrite').parquet("data.parquet")
 
 if __name__ == '__main__':
     run()
