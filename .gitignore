@@ -7,3 +7,4 @@ sample_dataset/
 imdb_data/
 # pycharm files
 .idea
+test.parquet

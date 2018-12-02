@@ -12,6 +12,9 @@ sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 DATA_DIR = 'hdfs:///datasets/opensubtitle/OpenSubtitles2018/xml/en'
 
+
+imdb_ids = spark.read.csv("ids.csv")
+imdb_ids = set(imdb_ids.select('_c1').rdd.map(lambda r:  r[0]).collect())
 #checks if correct schema
 def has_correct_schema(df):
     arguments = [
@@ -116,7 +119,7 @@ def df_all_files():
         # print(year_path)
         for i in fs.get(conf).listStatus(year_path):
             id = str(i.getPath()).split('/')[-1]
-            if(len(id) == 7):
+            if(len(id) == 7 and ("tt"+id)  in imdb_ids):
                 movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
                 count = 0
                 for f in fs.get(conf).listStatus(movie_path):
