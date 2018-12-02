@@ -31,15 +31,6 @@ def get_paths(command_ar) :
     return paths
 
 def run():
-    # schema_films = StructType([StructField('tconst', StringType(), False),
-    #                            StructField('num_subtitles', LongType(), True),
-    #                            StructField('year', LongType(), True),
-    #                            StructField('blocks', LongType(), True),
-    #                            StructField('subtitle_mins', DoubleType(), True),
-    #                            StructField('genres', ArrayType(StringType()), True),
-    #                            StructField('subtitles', ArrayType(ArrayType(StringType())), True)])
-    # Create empty dataframe with specified schema
-    # df_films = spark.createDataFrame([], schema_films)
     years = map(lambda x: str(x), range(1920, 2019))
     path = '/datasets/opensubtitle/OpenSubtitles2018/xml/en/'
 
@@ -56,14 +47,8 @@ def run():
             files = get_paths(['hadoop','fs','-ls', movie_path])
             print(movie_path)
             for fn in files:
-                # TODO
                 file_path = movie_path + "/" + fn
-                # Create a dataframe for each file
-                # df_document = load_df(file_path)
-                # Restructure dataframe and add it to df_films
-                # df_films = df_films.unionAll(clean_df(df_document, imdb_id))
                 print(file_path)
-
 
 if __name__ == '__main__':
     run()
