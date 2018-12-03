@@ -124,6 +124,7 @@ def df_all_files():
     conf = hadoop.conf.Configuration()
     path = hadoop.fs.Path(DATA_DIR)
     years = map(lambda y: str(y), range(1910, 2019))
+    parquet_list = []
     # 1996/853497
     # 561586/6614354.xml.gz
     for year in years:
@@ -145,17 +146,26 @@ def df_all_files():
                     df_document = load_df(file_path)
                     # Restructure dataframe and add it to df_films
                     if (has_correct_schema(df_document)):
-                        film_list.append(clean_df(df_document, id))
+                        film_list.append(clean_df(df_document, imdb_id))
                         count = count + 1
                     # print(fn)
-    return unionAll(*film_list)
+        if(len(film_list) > 600):
+          parquet_file = year + ".parquet"
+          parquet_list.append(parquet_file)
+          unionAll(*film_list).write.parquet(parquet_file)
+          print("write parquet")
+          film_list = []
+    if(film_list):
+        parquet_file = "final" + ".parquet"
+        parquet_list.append(parquet_file)
+        unionAll(*film_list).write.parquet(parquet_file)
 
 
 def run():
-    df_films = df_all_files()
-    print("Create parquet")
+    df_all_files()
+    print("Finished")
     # Create parquet file
-    df_films.write.mode('overwrite').parquet("data2.parquet")
+
 
 
 if __name__ == '__main__':
