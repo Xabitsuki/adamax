@@ -8,3 +8,4 @@ imdb_data/
 # pycharm files
 .idea
 *.parquet 
+parquets/
