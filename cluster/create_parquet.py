@@ -19,7 +19,7 @@ imdb_ids = set(imdb_ids.select('_c1').rdd.map(lambda r:  r[0]).collect())
 def has_correct_schema(df):
     arguments = [
                  "meta.conversion.sentences",
-                 "meta.source.year", 
+                 "meta.source.year",
                  "meta.subtitle.blocks",
                  "meta.subtitle.duration",
                  "meta.subtitle.language",
@@ -62,20 +62,20 @@ def clean_df(df_document, imdb_id):
     # Create IMDb ID and subtitles column
     df_film_sentences = df_document.withColumn("tconst", lit("tt" + imdb_id))\
                                    .withColumn("subtitles", udf_subtitles_array("s"))
-    
+
     # Select metadata and previously created columns
     df_result = df_film_sentences.selectExpr("tconst",
-                                             "meta.conversion.sentences as num_subtitles",
-                                             "meta.source.year", 
+                                             "meta.conversion.sentences as num_sentences",
+                                             "meta.source.year",
                                              "meta.subtitle.blocks",
                                              "meta.subtitle.duration as subtitle_duration",
                                              "meta.subtitle.language",
                                              "subtitles")
     # Split genre column and convert subtitle duration to seconds
-    df_result = df_result.withColumn("subtitle_mins", 
+    df_result = df_result.withColumn("subtitle_mins",
                                      unix_timestamp(df_result.subtitle_duration, "HH:mm:ss,SSS") / 60)
     # Discard redundant columns
-    return df_result.select("tconst", "num_subtitles", "year", "blocks", "subtitle_mins", "subtitles")
+    return df_result.select("tconst", "num_sentences", "year", "blocks", "subtitle_mins", "subtitles")
 
 
 def load_df(path):
@@ -99,7 +99,7 @@ def df_all_files():
     in a path that has the following subdirectories: year/imdb_id/"""
 
     schema_films = StructType([StructField('tconst', StringType(), False),
-                               StructField('num_subtitles', LongType(), True),
+                               StructField('num_sentences', LongType(), True),
                                StructField('year', LongType(), True),
                                StructField('blocks', LongType(), True),
                                StructField('subtitle_mins', DoubleType(), True),
@@ -133,7 +133,7 @@ def df_all_files():
                     df_document = load_df(file_path)
                     # Restructure dataframe and add it to df_films
                     if(has_correct_schema(df_document)):
-                        
+
                         df_films = df_films.unionAll(clean_df(df_document, id))
                         count = count + 1
                     # print(fn)
