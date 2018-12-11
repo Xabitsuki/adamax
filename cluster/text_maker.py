@@ -5,6 +5,7 @@ from pyspark.sql import *
 import pyspark.sql.functions as psf
 from pyspark.sql.types import *
 from pyspark.sql.utils import AnalysisException
+from sacremoses import MosesDetokenizer
 
 # from datetime import datetime
 
@@ -12,18 +13,11 @@ spark = SparkSession.builder.getOrCreate()
 sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 
-
 def subtitles_to_string(subtitles):
     result = ""
-    for sentence in subtitles:
-        for word in sentence:
-            if re.match("^[\\[\"\']$", word):
-                result += word
-            elif not re.match("^[\\w]+[.,\\w]*$",word):
-                result = result[:-1] + word + " "
-            else:
-                result += word + " "
-        result += "\n"
+    for subtitle in subtitles:
+        test = MosesDetokenizer().detokenize(subtitle)
+        result += test + "\n"
     return result
 
 
