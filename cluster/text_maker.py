@@ -17,10 +17,12 @@ def subtitles_to_string(subtitles):
     result = ""
     for sentence in subtitles:
         for word in sentence:
-            if re.match("^[a-zA-Z]+$", word):
-                result = result + " " + word
-            else:
+            if re.match("^[\\[\"\']$", word):
                 result += word
+            elif not re.match("^[\\w]+[.,\\w]*$",word):
+                result = result[:-1] + word + " "
+            else:
+                result += word + " "
         result += "\n"
     return result
 
