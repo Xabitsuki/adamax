@@ -59,15 +59,15 @@ udf_sentence = udf(lambda x: ' '.join(x), StringType())
 udf_split = udf(str.split, ArrayType(StringType()))
 
 
-def clean_df(df_document, imdb_id):
+def clean_df(df_document, imdb_id, count):
     """Restructures and selects the columns of a dataframe of an XML
     file with its corresponding IMDB Id"""
     # Create IMDb ID and subtitles column
     df_film_sentences = df_document.withColumn("tconst", lit("tt" + imdb_id)) \
-        .withColumn("subtitles", udf_subtitles_array("s"))
+        .withColumn("subtitles", udf_subtitles_array("s")).withColumn("sid", lit(count))
 
     # Select metadata and previously created columns
-    df_result = df_film_sentences.selectExpr("tconst",
+    df_result = df_film_sentences.selectExpr("tconst", "sid",
                                              "meta.conversion.sentences as num_subtitles",
                                              "meta.source.year",
                                              "meta.subtitle.blocks",
@@ -78,7 +78,7 @@ def clean_df(df_document, imdb_id):
     df_result = df_result.withColumn("subtitle_mins",
                                      unix_timestamp(df_result.subtitle_duration, "HH:mm:ss,SSS") / 60)
     # Discard redundant columns
-    return df_result.select("tconst", "num_subtitles", "year", "blocks", "subtitle_mins", "subtitles")
+    return df_result.select("tconst", "sid", "num_subtitles", "year", "blocks", "subtitle_mins", "subtitles")
 
 
 def load_df(path):
@@ -111,6 +111,7 @@ def df_all_files():
     in a path that has the following subdirectories: year/imdb_id/"""
 
     schema_films = StructType([StructField('tconst', StringType(), False),
+                               StructField('sid', IntegerType(), False),
                                StructField('num_subtitles', LongType(), True),
                                StructField('year', LongType(), True),
                                StructField('blocks', LongType(), True),
@@ -138,27 +139,28 @@ def df_all_files():
                 movie_path = hadoop.fs.Path(DATA_DIR + "/" + year + "/" + id)
                 count = 0
                 for f in fs.get(conf).listStatus(movie_path):
-                    if count == 1:
+                    if count == 4:
                         break
                     fn = str(f.getPath()).split('/')[-1]
                     file_path = DATA_DIR + "/" + year + "/" + id + "/" + fn
+
                     # Create a dataframe for each file
                     df_document = load_df(file_path)
                     # Restructure dataframe and add it to df_films
                     if (has_correct_schema(df_document)):
-                        film_list.append(clean_df(df_document, imdb_id))
+                        film_list.append(clean_df(df_document, imdb_id, count))
                         count = count + 1
                     # print(fn)
         if(len(film_list) > 600):
           parquet_file = year + ".parquet"
           parquet_list.append(parquet_file)
-          unionAll(*film_list).write.parquet(parquet_file)
+          unionAll(*film_list).write.parquet("final/" + parquet_file)
           print("write parquet")
           film_list = []
     if(film_list):
-        parquet_file = "final" + ".parquet"
+        parquet_file = "2018" + ".parquet"
         parquet_list.append(parquet_file)
-        unionAll(*film_list).write.parquet(parquet_file)
+        unionAll(*film_list).write.parquet("final/" + parquet_file)
 
 
 def run():
