@@ -84,3 +84,9 @@ Each movie/show in the OpenSubtitles dataset is determined by its IMDb identifie
 - Are we allowed other programming languages and/or tools than Python? NVivo for instance.
 
 [//]: # (Add here some questions you have for us, in general or project-specific.)
+
+## Contributors
+
+- **Xabier**: plotting graphs during data analysis, running tests, preliminary data analysis, commenting results, topic detection.
+- **Martin**: plotting graphs during data analysis, problem formulation, coming up with algorithms, coding up algorithms, sentiment analysis.
+- **Adrian**: plotting graphs during data analysis, writing the data story, managing the git repository, final presentation speaker.
