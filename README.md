@@ -1,5 +1,7 @@
 # A Movie behind a Script
 
+Data story: https://epfl-ada-2018.github.io/ada2018-movie-scripts/
+
 ## Abstract
 
 A movie is a recording of moving images that tell a story and that people watch on a screen or television. People devote money and attention to what they find entertaining. From a historical point of view, works of art have acted as a reflection of our society and our culture. We have come a long way since the public screening of ten of Lumière brothers' short films in Paris on 28 December 1895 to Avatar, a movie whose cost of development reached more than 200 million dollars and recorded nearly 2 billion dollars in gross, the highest of all-time. During all this time, scripts have remained the base stone to a movie. What script must one write for a movie to prosper? We have data spanning nearly 100 years with over 30 million movies to try to solve this puzzle. Using the [OpenSubtitles](https://icitdocs.epfl.ch/display/clusterdocs/OpenSubtitles) dataset and the [IMDb](https://datasets.imdbws.com/) dataset to analyze movies' scripts and measure their popularity we hope to provide a better insight to what makes a good and a bad movie.
